@@ -1,5 +1,3 @@
-package http_1_1_app;
-
 import java.util.HashMap;
 import java.util.Map;
 
