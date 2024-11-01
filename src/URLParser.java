@@ -2,26 +2,21 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class URLParser {
-    private final String host;
-    private final int port;
-    private final String path;
+    private final URL url;
 
     public URLParser(String urlString) throws MalformedURLException {
-        URL url = new URL(urlString);
-        this.host = url.getHost();
-        this.port = (url.getPort() == -1) ? url.getDefaultPort() : url.getPort();
-        this.path = url.getPath().isEmpty() ? "/" : url.getPath();
+        this.url = new URL(urlString);
     }
 
     public String getHost() {
-        return host;
+        return url.getHost();
     }
 
     public int getPort() {
-        return port;
+        return (url.getPort() == -1) ? url.getDefaultPort() : url.getPort();
     }
 
     public String getPath() {
-        return path;
+        return url.getPath().isEmpty() ? "/" : url.getPath() + "?" + url.getQuery();
     }
 }
