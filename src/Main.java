@@ -17,7 +17,7 @@ public class Main {
                 System.out.println("URL 파싱 완료: " + urlParser.getHost() + ", 경로: " + urlParser.getPath());
 
                 // HttpClient로 요청 전송 및 응답 렌더링
-                HttpClient client = new HttpClient(urlParser.getHost(), urlParser.getPort(), urlParser.getPath(), cookieManager);
+                HttpClient client = new HttpClient(urlParser, cookieManager);
                 client.sendRequest();
             }
         } catch (Exception e) {
