@@ -9,10 +9,10 @@ public class HttpClient {
     private final String path;
     private final CookieManager cookieManager;
 
-    public HttpClient(String host, int port, String path, CookieManager cookieManager) {
-        this.host = host;
-        this.port = port;
-        this.path = path;
+    public HttpClient(final URLParser urlParser, final CookieManager cookieManager) {
+        this.host = urlParser.getHost();
+        this.port = urlParser.getPort();
+        this.path = urlParser.getPath();
         this.cookieManager = cookieManager;
     }
 
@@ -37,14 +37,14 @@ public class HttpClient {
 
             // 2. HTTP 응답 수신
             String responseLine;
-            boolean isHeader = true;
+            boolean existHeader = true;
             System.out.println("===== HTTP 응답 =====");
 
             // 쿠키 추출용 패턴
             Pattern cookiePattern = Pattern.compile("Set-Cookie: (.*?);");
 
             while ((responseLine = reader.readLine()) != null) {
-                if (isHeader) {
+                if (existHeader) {
                     // Set-Cookie 헤더에서 쿠키 추출
                     Matcher matcher = cookiePattern.matcher(responseLine);
                     if (matcher.find()) {
@@ -53,7 +53,7 @@ public class HttpClient {
                     }
                     // 헤더의 끝을 알리는 빈 줄 확인
                     if (responseLine.isEmpty()) {
-                        isHeader = false;
+                        existHeader = false;
                         System.out.println("\n===== 응답 본문 =====");
                     }
                 }
